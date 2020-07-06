@@ -1,0 +1,58 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{WORKSPACE}}
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: code-server
+  namespace: {{WORKSPACE}}
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+  - host: {{HOST}}
+    http:
+      paths:
+      - path: /{{WORKSPACE}}
+        backend:
+          serviceName: code-server
+          servicePort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: code-server
+ namespace: {{WORKSPACE}}
+spec:
+ ports:
+ - port: 80
+   targetPort: 8080
+ selector:
+   app: code-server
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: code-server
+  name: code-server
+  namespace: {{WORKSPACE}}
+spec:
+  selector:
+    matchLabels:
+      app: code-server
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: code-server
+    spec:
+      containers:
+      - image: mastercoder/code-server:{{WORKSPACE}}
+        imagePullPolicy: Always
+        name: code-server
+        env:
+        - name: PASSWORD
+          value: "{{PSWRD}}"
