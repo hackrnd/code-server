@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # sample value for your variables
-HOST="remotedev.in"
+HOST="49ea3c9e-63f1-46cc-b5b6-e6b8689ac8db.k8s.civo.com"
 WORKSPACE="nodemon"
 PSWRD="pass"
 
