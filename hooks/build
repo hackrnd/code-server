@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# docker build --build-arg git_url=https://github.com/krismuniz/minimal-starter.git -t $IMAGE_NAME .
+
+docker build -f $DOCKER_TAG/Dockerfile -t $IMAGE_NAME .
